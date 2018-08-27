@@ -61,21 +61,21 @@ window.onload = () => {
   results.addEventListener('click',  (e) => {
     setTimeout(() => {
       if (document.querySelector('#vjs-content')) {
-        vjsContent = document.querySelector('#vjs-content')
-        vjsContent.insertBefore(pages, vjsContent.firstChild)  
-      } 
+        let vjsContent = document.querySelector('#vjs-content');
+        vjsContent.insertBefore(pages, vjsContent.firstChild);
+      }
       if (document.querySelector('#vjs-x')) {
-        close = document.querySelector('#vjs-x')
+        let close = document.querySelector('#vjs-x');
         close.addEventListener('click', (e) => {
             if (document.querySelector('#jobalerts')) {
-              side = document.querySelector('#jobalerts')
-              side.insertBefore(pages, side.firstChild)
+              side = document.querySelector('#jobalerts');
+              side.insertBefore(pages, side.firstChild);
             }
-        })
+        });
       }
     }, 200);
-  })
-}
+  });
+};
 
 // hide job spotter postings
 const hideJobSpot = () => {
@@ -91,7 +91,7 @@ const hideJobSpot = () => {
     localStorage.removeItem(jobSpotCb.id);
     jobSpot.forEach((posting) => posting.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = 'block');
   }
-}
+};
 
 // hide sponsored postings
 const hideSponsored = () => {
@@ -104,4 +104,4 @@ const hideSponsored = () => {
     localStorage.removeItem(sponsoredCb.id);
     sponsored.forEach((ad) => ad.parentElement.parentElement.parentElement.parentElement.style.display = 'block');
   }
-}
+};
