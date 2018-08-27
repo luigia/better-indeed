@@ -5,6 +5,11 @@
 
 **Better Indeed** is a browser userscript to enhance your experience and make your job search on Indeed easier. The small tool gives users the option to remove sponsored postings or postings made by Job Spotter on Indeed. The pagination is also moved to the side. This allows page navigation from the top or bottom of the page as Indeed moves the sidebar on scroll.
 
+## Screenshots ##
+![gif](https://cl.ly/4d59e8bf49f1/Screen%252520Recording%2525202018-08-27%252520at%25252003.51%252520PM.gif)
+
+[More screenshots](https://imgur.com/a/4PtT15L)
+
 ## Why Use This ##
 
 Sponsored posts can get annoying when jobs are sorted by date instead of relevance. They'll ignore the sort rule and still show jobs that were posted over 30 days ago. Job Spotter and sponsored posts can still be relevant to the job seeker which is why the options to hide them are toggable.
