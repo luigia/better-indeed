@@ -4,6 +4,7 @@
 // @version        1.0.0
 // @namespace      https://github.com/luigia
 // @author         Luigi Agcaoili
+// @license        MIT - https://opensource.org/licenses/MIT
 // @description    Removes bloat on Indeed by giving users the option to remove sponsored and/or Job Spotter postings
 // @include        https://indeed.com/jobs?*
 // @include        *indeed.com/jobs?*
