@@ -1,70 +1,67 @@
 // ==UserScript==
 // @id             better-indeed
 // @name           Better Indeed
-// @version        1.0.0
+// @version        1.0.1
 // @namespace      https://github.com/luigia
 // @author         Luigi Agcaoili
 // @license        MIT - https://opensource.org/licenses/MIT
 // @description    Removes bloat on Indeed by giving users the option to remove sponsored and/or Job Spotter postings
 // @include        https://indeed.com/jobs?*
 // @include        *indeed.com/jobs?*
+// @updateURL      https://github.com/luigia/better-indeed/raw/master/better-indeed.user.js
 // @run-at         document-end
 // @grant          none
 // ==/UserScript==
 
 // select & edit the top bar
-let bar = '';
-if (document.querySelector('#resumePromo')) bar = document.querySelector('#resumePromo');
-if (document.querySelector('.resultsTop')) bar = document.querySelector('.resultsTop');
+let bar = document.querySelector('#resumePromo') || document.querySelector('.resultsTop');
 
 bar.innerHTML = `
   <input type="checkbox" id="job-spotter-checkbox">
-  <label for="job-spotter-checkbox">Hide job spotter postings</label>
+  <label for="job-spotter-checkbox">Hide Job Spotter ads</label>
   <input type="checkbox" id="sponsored-checkbox">
-  <label for="sponsored-checkbox">Hide sponsored postings</label>
+  <label for="sponsored-checkbox">Hide sponsored ads</label>
 `;
 
 // checkbox variables
 const jobSpotCb = document.querySelector('#job-spotter-checkbox'),
 sponsoredCb = document.querySelector('#sponsored-checkbox');
 
+// addEventListeners & check localStorage
 window.onload = () => {
-  // addEventListeners & check localStorage
   jobSpotCb.addEventListener('change', hideJobSpot);
   sponsoredCb.addEventListener('change', hideSponsored);
 
   let jobSpotLS = JSON.parse(localStorage.getItem(jobSpotCb.id)),
   sponsoredLS = JSON.parse(localStorage.getItem(sponsoredCb.id));
+
   if (jobSpotLS) {
     jobSpotCb.checked = true;
     hideJobSpot();
   }
+
   if (sponsoredLS) {
     sponsoredCb.checked = true;
     hideSponsored();
   }
 
   // move pagination to the side
-  let side = '';
   const pages = document.querySelector('.pagination'),
   results = document.querySelector('#resultsCol');
   // delay as job postings aren't instantly loaded
   setTimeout(() => {
-    if (document.querySelector('#jobalerts')) {
-    side = document.querySelector('#jobalerts');
-  } else if (document.querySelector('#vjs-content')) {
-    side = document.querySelector('#vjs-content');
-  }
-  side.insertBefore(pages, side.firstChild);
+    let side = document.querySelector('#jobalerts') || document.querySelector('#vjs-content');
+    side.insertBefore(pages, side.firstChild);
   }, 200);
 
   // move pagination back to the side if it's removed
-  results.addEventListener('click',  (e) => {
+  results.addEventListener('click', (e) => {
     setTimeout(() => {
       if (document.querySelector('#vjs-content')) {
         let vjsContent = document.querySelector('#vjs-content');
         vjsContent.insertBefore(pages, vjsContent.firstChild);
       }
+
       if (document.querySelector('#vjs-x')) {
         let close = document.querySelector('#vjs-x');
         close.addEventListener('click', (e) => {
@@ -76,7 +73,7 @@ window.onload = () => {
       }
     }, 200);
   });
-};
+}
 
 // hide job spotter postings
 const hideJobSpot = () => {
@@ -92,17 +89,36 @@ const hideJobSpot = () => {
     localStorage.removeItem(jobSpotCb.id);
     jobSpot.forEach((posting) => posting.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = 'block');
   }
-};
+}
 
 // hide sponsored postings
 const hideSponsored = () => {
-  const sponsored = Array.from(document.querySelectorAll('.sponsoredGray'));
+  let sponsored = Array.from(document.querySelectorAll('.sponsoredGray')),
+  easilyApply = [],
+  regSponsored = [];
 
   if (sponsoredCb.checked) {
     localStorage.setItem(sponsoredCb.id, sponsoredCb.checked);
-    sponsored.forEach((ad) => ad.parentElement.parentElement.parentElement.parentElement.style.display = 'none');
+    // organize sponsored ads
+    sponsored.forEach((ad) => ad.parentElement.parentElement.previousElementSibling ? ad.parentElement.parentElement.previousElementSibling.children[0].textContent.includes('Easily apply') && easilyApply.push(ad) : regSponsored.push(ad));
+    easilyApply.forEach((ad) => {
+      if (ad.parentElement.parentElement.parentElement.parentElement.className.includes('result') || ad.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes('result'))
+        ad.parentElement.parentElement.parentElement.parentElement.style.display = 'none';
+    });
+    regSponsored.forEach((ad) => {
+      if (ad.parentElement.parentElement.parentElement.parentElement.className.includes('result') || ad.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes('result'))
+        ad.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = 'none';
+    });
   } else {
     localStorage.removeItem(sponsoredCb.id);
-    sponsored.forEach((ad) => ad.parentElement.parentElement.parentElement.parentElement.style.display = 'block');
+    sponsored.forEach((ad) => ad.parentElement.parentElement.previousElementSibling ? ad.parentElement.parentElement.previousElementSibling.children[0].textContent.includes('Easily apply') && easilyApply.push(ad) : regSponsored.push(ad));
+    easilyApply.forEach((ad) => {
+      if (ad.parentElement.parentElement.parentElement.parentElement.className.includes('result') || ad.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes('result'))
+        ad.parentElement.parentElement.parentElement.parentElement.style.display = 'block';
+    });
+    regSponsored.forEach((ad) => {
+      if (ad.parentElement.parentElement.parentElement.parentElement.className.includes('result') || ad.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes('result'))
+        ad.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = 'block';
+    });
   }
-};
+}
