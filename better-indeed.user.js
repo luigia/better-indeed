@@ -102,12 +102,16 @@ const hideSponsored = () => {
     // organize sponsored ads
     sponsored.forEach((ad) => ad.parentElement.parentElement.previousElementSibling ? ad.parentElement.parentElement.previousElementSibling.children[0].textContent.includes('Easily apply') && easilyApply.push(ad) : regSponsored.push(ad));
     easilyApply.forEach((ad) => {
-      if (ad.parentElement.parentElement.parentElement.parentElement.className.includes('result') || ad.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes('result'))
+      if (ad.parentElement.parentElement.parentElement.parentElement.className.includes('result'))
         ad.parentElement.parentElement.parentElement.parentElement.style.display = 'none';
+      else if (ad.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes('result'))
+        ad.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = 'none';  
     });
     regSponsored.forEach((ad) => {
-      if (ad.parentElement.parentElement.parentElement.parentElement.className.includes('result') || ad.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes('result'))
-        ad.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = 'none';
+      if (ad.parentElement.parentElement.parentElement.parentElement.className.includes('result'))
+        ad.parentElement.parentElement.parentElement.parentElement.style.display = 'none';
+      else if (ad.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.className.includes('result'))
+        ad.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = 'none';  
     });
   } else {
     localStorage.removeItem(sponsoredCb.id);
