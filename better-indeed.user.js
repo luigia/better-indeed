@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             better-indeed
 // @name           Better Indeed
-// @version        1.0.3
+// @version        1.0.4
 // @namespace      https://github.com/luigia
 // @author         Luigi Agcaoili
 // @license        MIT - https://opensource.org/licenses/MIT
@@ -24,15 +24,18 @@ bar.innerHTML = `
   <input type="checkbox" id="sponsored-checkbox">
   <label for="sponsored-checkbox">Hide sponsored ads</label>
 `
+// add consistent styling to div
 bar.style.marginBottom = '24px'
 bar.style.marginLeft = '0'
 bar.style.paddingLeft = '24px'
 bar.style.color = '#2d2d2d'
 bar.style.fontSize = '12px'
 bar.style.maxWidth = '70%'
+// add consistent styling to title
 bar.firstElementChild.style.fontSize = '14px'
 bar.firstElementChild.style.fontWeight = '500'
 bar.firstElementChild.style.color = '#000'
+// insert the div before the first child
 filters.insertBefore(bar, filters.firstChild)
 
 // checkbox variables
@@ -43,24 +46,22 @@ const jobSpotCb = document.querySelector('#job-spotter-checkbox'),
 window.onload = () => {
   jobSpotCb.addEventListener('change', hideJobSpot)
   sponsoredCb.addEventListener('change', hideSponsored)
-
+  // call the function based on localStorage definitions
   let jobSpotLS = JSON.parse(localStorage.getItem(jobSpotCb.id)),
     sponsoredLS = JSON.parse(localStorage.getItem(sponsoredCb.id))
-
   if (jobSpotLS) {
     jobSpotCb.checked = true
     hideJobSpot()
   }
-
   if (sponsoredLS) {
     sponsoredCb.checked = true
     hideSponsored()
   }
 
-  // move pagination to the side
+  // re-insert pagination to the side or job posting after the pagination is moved
   const pagination = document.querySelector('.pagination'),
     results = document.querySelector('#resultsCol')
-  // delay as job postings aren't instantly loaded
+  // add a delay as job postings aren't instantly loaded
   setTimeout(() => {
     let side = document.querySelector('#jobalerts') || document.querySelector('#vjs-content')
     side.insertBefore(pagination, side.firstChild)
@@ -69,11 +70,12 @@ window.onload = () => {
   // move pagination back to the side if it's removed
   results.addEventListener('click', (e) => {
     setTimeout(() => {
+      // currently viewing a job listing
       if (document.querySelector('#vjs-content')) {
         let vjsContent = document.querySelector('#vjs-content')
         vjsContent.insertBefore(pagination, vjsContent.firstChild)
       }
-
+      // add event listener to close button
       if (document.querySelector('#vjs-x')) {
         let close = document.querySelector('#vjs-x')
         close.addEventListener('click', (e) => {
@@ -91,12 +93,12 @@ window.onload = () => {
 const hideJobSpot = () => {
   const linkSource = Array.from(document.querySelectorAll('.result-link-source')),
     jobSpot = []
-
+  // sources that include Job Spotter text are recorded
   linkSource.forEach((source) => (source.textContent == 'Job Spotter ') && jobSpot.push(source))
-
+  // set variable in localStorage & show/hide Job Spotter postings
   if (jobSpotCb.checked) {
     localStorage.setItem(jobSpotCb.id, jobSpotCb.checked)
-    ;(jobSpot.length > 0) && jobSpot.forEach((posting) => posting.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = 'none')
+    (jobSpot.length > 0) && jobSpot.forEach((posting) => posting.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = 'none')
   } else {
     localStorage.removeItem(jobSpotCb.id)
     jobSpot.forEach((posting) => posting.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.display = 'block')
@@ -106,8 +108,9 @@ const hideJobSpot = () => {
 // hide sponsored postings
 const hideSponsored = () => {
   let lastSponsored = Array.from(document.querySelectorAll('.sjlast'))
-
+  // set variable in localStorage & show/hide sponsored postings
   if (sponsoredCb.checked) {
+    // use a loop only if there is more than one element for performance
     localStorage.setItem(sponsoredCb.id, sponsoredCb.checked)
     if (lastSponsored.length === 1) {
       lastSponsored[0].parentElement.style.display = 'none'
