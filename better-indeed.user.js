@@ -23,7 +23,7 @@ bar.innerHTML = `
   <label for="job-spotter-checkbox">Hide Job Spotter ads</label>
   <input type="checkbox" id="sponsored-checkbox">
   <label for="sponsored-checkbox">Hide sponsored ads</label>
-  `
+`
 bar.style.marginBottom = '24px'
 bar.style.marginLeft = '0'
 bar.style.paddingLeft = '24px'
