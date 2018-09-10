@@ -30,4 +30,6 @@ Sponsored posts can get annoying when jobs are sorted by date instead of relevan
 3. Visit Indeed and search for job postings.
 4. Click the checkboxes at the top of the page to block sponsored postings or Job Spotter postings or both.
 
+Also available at [Greasy Fork (Better Indeed)](https://greasyfork.org/en/scripts/371639-better-indeed) and [OpenUserJS (Better Indeed)](https://openuserjs.org/scripts/luigi/Better_Indeed).
+
 ## [![Install](https://i.imgur.com/hKHfyWz.png)](https://github.com/luigia/better-indeed/raw/master/better-indeed.user.js) ##
