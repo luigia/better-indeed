@@ -1,13 +1,13 @@
 // ==UserScript==
 // @id             better-indeed
 // @name           Better Indeed
-// @version        1.1.0
+// @version        1.1.1
 // @namespace      https://github.com/luigia
 // @author         Luigi Agcaoili
 // @license        MIT - https://opensource.org/licenses/MIT
 // @description    Removes bloat on Indeed by giving users the option to remove sponsored and/or Job Spotter postings
 // @include        https://indeed.com/jobs?*
-// @include        *indeed.com/jobs?*
+// @include        *indeed.com/*
 // @updateURL      https://github.com/luigia/better-indeed/raw/master/better-indeed.user.js
 // @run-at         document-end
 // @grant          none
