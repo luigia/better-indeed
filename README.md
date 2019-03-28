@@ -26,7 +26,7 @@ Sponsored posts can get annoying when jobs are sorted by date instead of relevan
 ## Installation ##
 
 1. Install [Violentmonkey (Chrome)](https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag) or [Violentmonkey (Firefox)](https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/) or [Tampermonkey (Safari)](https://tampermonkey.net/?browser=safari) or a userscript manager of your choice.
-2. Open the [script in raw view](https://example.com) to install it or click the big green install button below.
+2. Open the [script in raw view](https://github.com/luigia/better-indeed/raw/master/better-indeed.user.js) to install it or click the big green install button below.
 3. Visit Indeed and search for job postings.
 4. Click the checkboxes at the top of the page to block sponsored postings or Job Spotter postings or both.
 
